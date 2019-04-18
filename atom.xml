@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://stevewuzhi.github.io/"/>
-  <updated>2019-03-14T14:23:31.990Z</updated>
+  <updated>2019-04-18T12:57:58.706Z</updated>
   <id>https://stevewuzhi.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>系统分析与设计 作业2</title>
+    <link href="https://stevewuzhi.github.io/2019/04/02/swad-hw2/"/>
+    <id>https://stevewuzhi.github.io/2019/04/02/swad-hw2/</id>
+    <published>2019-04-02T11:17:20.000Z</published>
+    <updated>2019-04-18T12:57:58.706Z</updated>
+    
+    <content type="html"><![CDATA[<p>By stevewuzhi(15322220)</p><hr><p>简答题</p><ul><li>用简短的语言给出对分析、设计的理解。</li><li>用一句话描述面向对象的分析与设计的优势。</li><li>简述 UML（统一建模语言）的作用。考试考哪些图？</li><li>从软件本质的角度，解释软件范围（需求）控制的可行性</li></ul><a id="more"></a><h2 id="1-分析、设计"><a href="#1-分析、设计" class="headerlink" title="1. 分析、设计"></a>1. 分析、设计</h2><p>分析是对用户需求的调研, 进而得出设计需求。分析的目的不是得出解决方案。</p><p>设计强调从概念上的解决方案, 并非具体实现。</p><h2 id="2-面向对象的分析与设计的优势"><a href="#2-面向对象的分析与设计的优势" class="headerlink" title="2. 面向对象的分析与设计的优势"></a>2. 面向对象的分析与设计的优势</h2><p> 面向对象的分析与设计, 令设计人员能对现实中的使用实体进行更高级别的抽象, 定义其属性和行为，简化了实现时对代码的理解难度, 使之有一定的自解释性。</p><h2 id="3-简述-UML（统一建模语言）的作用。考试考哪些图"><a href="#3-简述-UML（统一建模语言）的作用。考试考哪些图" class="headerlink" title="3. 简述 UML（统一建模语言）的作用。考试考哪些图?"></a>3. 简述 UML（统一建模语言）的作用。考试考哪些图?</h2><p>UML是使分析设计结果可视化的标准图表语言；它可作为草图，非正式和不完整的图表，利用可视化语言的力量来对问题的困难部分进行探索；可作为蓝图，用于逆向工程以便于更好的可视化和理解已有的代码；甚至可作为编程语言，在UML中完成软件系统的可执行规范。可执行文件代码将自动生成，但通常不会被开发人员看到或修改。</p><h2 id="4-从软件本质的角度，解释软件范围（需求）控制的可行性"><a href="#4-从软件本质的角度，解释软件范围（需求）控制的可行性" class="headerlink" title="4. 从软件本质的角度，解释软件范围（需求）控制的可行性"></a>4. 从软件本质的角度，解释软件范围（需求）控制的可行性</h2><h2 id="6-UML图"><a href="#6-UML图" class="headerlink" title="6. UML图"></a>6. UML图</h2><p><img src="https://i.loli.net/2019/04/18/5cb872112cd52.png" alt="uml.png"></p><p>Ref: </p><ol><li>Software Crisis - Wikipedia: <a href="https://en.wikipedia.org/wiki/Software_crisis" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Software_crisis</a></li><li>软件危机 - 维基百科: <a href="https://zh.wikipedia.org/wiki/%E8%BD%AF%E4%BB%B6%E5%8D%B1%E6%9C%BA" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E8%BD%AF%E4%BB%B6%E5%8D%B1%E6%9C%BA</a></li><li>软件生命周期 - 维基百科: <a href="https://zh.wikipedia.org/wiki/%E8%BD%AF%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E8%BD%AF%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F</a></li><li>Software development process - Wikipedia:  <a href="https://en.wikipedia.org/wiki/Software_lifecycle" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Software_lifecycle</a></li><li>CMMI - Wikipedia : <a href="https://en.wikipedia.org/wiki/CMMI" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/CMMI</a></li><li>能力成熟度模型集成 - 维基百科 : <a href="https://zh.wikipedia.org/wiki/%E8%83%BD%E5%8A%9B%E6%88%90%E7%86%9F%E5%BA%A6%E6%A8%A1%E5%9E%8B%E9%9B%86%E6%88%90" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E8%83%BD%E5%8A%9B%E6%88%90%E7%86%9F%E5%BA%A6%E6%A8%A1%E5%9E%8B%E9%9B%86%E6%88%90</a></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;By stevewuzhi(15322220)&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;简答题&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用简短的语言给出对分析、设计的理解。&lt;/li&gt;
+&lt;li&gt;用一句话描述面向对象的分析与设计的优势。&lt;/li&gt;
+&lt;li&gt;简述 UML（统一建模语言）的作用。考试考哪些图？&lt;/li&gt;
+&lt;li&gt;从软件本质的角度，解释软件范围（需求）控制的可行性&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="系分" scheme="https://stevewuzhi.github.io/tags/%E7%B3%BB%E5%88%86/"/>
+    
+  </entry>
   
   <entry>
     <title>系统分析与设计 作业1</title>
