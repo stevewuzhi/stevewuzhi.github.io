@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 系统分析与设计 作业3 · stevewuzhi's gitpage</title><meta name="description" content="系统分析与设计 作业3 - stevewuzhi"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://stevewuzhi.github.io/atom.xml" title="stevewuzhi's gitpage"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/stevewuzhi/stevewuzhi.github.io" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">系统分析与设计 作业3</h1><div class="post-info">2019年4月14日</div><div class="post-content"><p>By stevewuzhi(15322220)</p>
+<a id="more"></a>
+<ol>
+<li><p>简述瀑布模型、增量模型、螺旋模型（含原型方法），并分析优缺点</p>
+<p>从项目特点、风险特征、人力资源利用角度思考</p>
+</li>
+<li><p>简述统一过程三大特点，与面向对象的方法有什么关系？</p>
+</li>
+<li><p>简述统一过程四个阶段的划分准则是什么？每个阶段关键的里程碑是什么？</p>
+</li>
+<li><p>软件企业为什么能按固定节奏生产、固定周期发布软件产品？它给企业项目管理带来哪些好处？</p>
+</li>
+</ol>
+<hr>
+<p>(部分答案参考自 <strong>蔡国扬</strong> 老师的软件测试课件)</p>
+<h2 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h2><h3 id="瀑布模型"><a href="#瀑布模型" class="headerlink" title="瀑布模型"></a>瀑布模型</h3><p>瀑布模型中的每一个开发活动具有下列特征:</p>
+<ul>
+<li>本阶段活动的工作对象来自于上一项活动的输出，这些输出一般是代表本阶段活动结束的里程碑式的文档。</li>
+<li>根据本阶段的活动规程执行相应的任务。</li>
+<li>本阶段活动产出相关的软件工件，作为下一阶段活动的输入。</li>
+<li>对本阶段活动执行情况进行评审。</li>
+</ul>
+<p>优点:</p>
+<ul>
+<li>降低软件开发的复杂程度，提高软件开发过程的透明性，提高软件开发过程的可管理性。</li>
+<li>推迟软件实现，强调在软件实现前必须进行分析和设计工作。</li>
+<li>以项目的阶段评审和文档控制为手段有效地对整个开发过程进行指导，保证了阶段之间的正确衔接，能够及时发现并纠正开</li>
+<li>发过程中存在的缺陷，使产品达到预期的质量要求。</li>
+</ul>
+<p>缺点:</p>
+<ul>
+<li><p>强调过程活动的线性顺序。</p>
+</li>
+<li><p>缺乏灵活性，尤其无法解决软件需求不明确或不准确的问题。</p>
+</li>
+<li><p>风险控制能力较弱。</p>
+</li>
+<li><p>瀑布模型中的软件活动是文档驱动的，当阶段之间规定过多的文档时，会极大地增加系统的工作量。</p>
+</li>
+<li><p>管理人员如果仅仅以文档的完成情况来评估项目完成进度，往往会产生错误的结论。</p>
+</li>
+</ul>
+<h3 id="迭代和增量模型"><a href="#迭代和增量模型" class="headerlink" title="迭代和增量模型"></a>迭代和增量模型</h3><p>增量模型首先对系统最核心或最清晰的需求进行分析、设计、实现、测试并集成到系统中，再按优先级逐步实现后续需求。</p>
+<p><img src="/2019/04/14/swad-hw3/incremental-model.png" alt></p>
+<p>增量模型的优点</p>
+<ul>
+<li><p>增强客户对系统的信心；</p>
+</li>
+<li><p>降低系统失败风险；</p>
+</li>
+<li><p>提高系统可靠性；</p>
+</li>
+<li><p>提高系统的稳定性和可维护性。</p>
+</li>
+</ul>
+<p>增量模型的缺点</p>
+<ul>
+<li><p>建立初始模型时，作为增量基础的基本业务服务的确定有一定难度；</p>
+</li>
+<li><p>增量粒度难以选择。</p>
+</li>
+</ul>
+<h3 id="螺旋模型-含原型方法"><a href="#螺旋模型-含原型方法" class="headerlink" title="螺旋模型(含原型方法)"></a>螺旋模型(含原型方法)</h3><p>螺旋模型主要针对大型软件项目的开发</p>
+<p>螺旋模型的优点: 螺旋模型是风险驱动的迭代过程，强调可选方案和约束条件从而支持软件的重用，有助于将软件质量作为特殊目标融入产品开发之中。螺旋模型结合了瀑布模型和快速原型方法，将瀑布模型的多个阶段转化到多个迭代过程中，以降低项目的风险。</p>
+<p>螺旋模型的缺点:</p>
+<ul>
+<li><p>螺旋模型强调风险分析，但说服外部客户接受和相信分析结果并做出相关反应并不容易，因此螺旋模型往往比较适合内部的大规模软件开发。</p>
+</li>
+<li><p>风险分析需要耗费相当的成本，因此螺旋模型比较适合投资规模较大的软件项目。</p>
+</li>
+<li><p>失误的风险分析可能带来更大的风险。</p>
+</li>
+</ul>
+<h2 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h2><p>RUP 模型(统一模型)的特点<br>RUP (Rational Unified Process) 是一种基于UML 的、以构架为中心、用例驱动与风险驱动相结合的迭代增量过程。它将软件开发过程要素和软件工件要素整合在统一的软件工程框架中，是一个面向对象的程序开发方法论。</p>
+<h2 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h2><p>RUP 中的软件生命周期在时间维度上被分解为四个顺序的阶段：<br>初始阶段(Inception)、精化阶段(Elaboration)、构建阶段(Construction) 和产品交付阶段(Transition)。每个阶段结束于一个主要的里程碑(Major Milestone)，并在阶段结尾执行一次评估以确定这个阶段的目标是否已经满足。如果评估结果令人满意的话，可以允许项目进入下一个阶段。</p>
+<h2 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h2><p>软件企业根据自身特点与用户需求选择不同的软件开发周期模型, 通过不同的迭代策略控制版本发布的时间安排, 实现项目的工业化产出。对企业项目管理来说, 使用合适的生产模型有利于分工的细化, 从而带来生产成本的下降。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2019/05/25/swad-hw6/" class="prev">上一篇</a><a href="/2019/04/02/swad-hw2/" class="next">下一篇</a></div><div class="copyright"><p>© 2019 <a href="https://stevewuzhi.github.io">stevewuzhi</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

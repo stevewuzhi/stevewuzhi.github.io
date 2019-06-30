@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 系统分析与设计 作业6 · stevewuzhi's gitpage</title><meta name="description" content="系统分析与设计 作业6 - stevewuzhi"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://stevewuzhi.github.io/atom.xml" title="stevewuzhi's gitpage"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/stevewuzhi/stevewuzhi.github.io" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">系统分析与设计 作业6</h1><div class="post-info">2019年5月25日</div><div class="post-content"><p>By stevewuzhi(15322220)</p>
+<p>1、简答题</p>
+<ol>
+<li>用例的概念</li>
+<li>用例和场景的关系？什么是主场景或 happy path？</li>
+<li>用例有哪些形式？</li>
+<li>对于复杂业务，为什么编制完整用例非常难？</li>
+<li>什么是用例图？</li>
+<li>用例图的基本符号与元素？</li>
+<li>用例图的画法与步骤</li>
+<li>用例图给利益相关人与开发者的价值有哪些？</li>
+</ol>
+<p>2、建模练习题(用例模型)</p>
+<ul>
+<li>选择2-3个你熟悉的类似业务的在线服务系统(或移动 APP)，如定旅馆(携程、去哪儿等)、定电影票、背单词APP等，分别绘制它们用例图。并满足以下要求：<ul>
+<li>请使用用户的视角，描述用户目标或系统提供的服务</li>
+<li>粒度达到子用例级别，并用 include 和 exclude 关联它们</li>
+<li>请用色彩标注出你认为创新(区别于竞争对手的)用例或子用例</li>
+<li>尽可能识别外部系统和服务</li>
+</ul>
+</li>
+<li>然后，回答下列问题：<ol>
+<li>为什么相似系统的用例图是相似的？</li>
+<li>如果是定旅馆业务，请对比 Asg_RH 用例图，简述如何利用不同时代、不同地区产品的用例图，展现、突出创新业务和技术</li>
+<li>如何利用用例图定位创新思路(业务创新、或技术创新、或商业模式创新)在系统中的作用 </li>
+<li>请使用 SCRUM 方法，选择一个用例图，编制某定旅馆开发的需求(backlog)开发计划表 </li>
+<li>根据任务4，参考 <a href="https://www.ibm.com/developerworks/cn/rational/edge/09/mar09/collaris_dekker/index.html" target="_blank" rel="noopener">使用用例点估算软件成本</a>，给出项目用例点的估算</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="1-简答题"><a href="#1-简答题" class="headerlink" title="1.简答题"></a>1.简答题</h2><ol>
+<li><p>用例的概念: 是软件工程或系统工程中对系统如何反应外界请求的描述，是一种通过用户的使用场景来获取需求的技术。每个用例提供了一个或多个场景，该场景说明了系统是如何和最终用户或其它系统互动，也就是谁可以用系统做什么，从而获得一个明确的业务目标。编写用例时要避免使用技术术语，而应该用最终用户或者领域专家的语言。用例一般是由软件开发者和最终用户共同创作的。</p>
+</li>
+<li></li>
+</ol>
+<p>用例和场景的关系: 每一个用例包括了许多个场景，场景中包含了用户是如何与系统进行交互，即谁可以利用系统做什么事情。</p>
+<p>主场景：每一个用例中都包含一个主场景，主场景对应于系统主要的交互，通常是指成功的场景。</p>
+<p>happy path: 在测试用例时没有出现预期之外结果的场景。在用例建模中，happy path是主执行者完成了目标，所有有关人员的需求都得到了满足。</p>
+<ol start="3">
+<li>用例的形式: 自然语言，可以用形式化语言，也可以用各种图示。</li>
+<li>对于复杂业务，为什么编制完整用例非常难: 复杂业务其业务流程较为复杂，业务较为繁琐，业务流程较多，因此对应于很多复杂的场景，用户交互的细节和相对应的支撑较多，较难实现用户与服务之间的完整与协调。</li>
+<li>用例图: 由参与者、用例，边界以及它们之间的关系构成的用于描述系统功能的视图。用例图是外部用户所能观察到的系统功能的模型图。</li>
+<li>用例图的基本符号与元素: 用例图由参与者(Actor)、用例(Use Case)、系统边界、箭头组成，用画图的方法来完成。</li>
+<li>用例图的画法与步骤: 确定业务过程、系统边界, 根据时序、数据依赖等关系为各命名过程添加箭头, 最后用边界框起来, 加上参与者图标。</li>
+<li>用例图给利益相关人与开发者的价值有:(1)获取需求；(2)指导测试；(3)还可在整个过程中的其它工作流起到指导作用。</li>
+</ol>
+<h2 id="2-建模练习题"><a href="#2-建模练习题" class="headerlink" title="2. 建模练习题"></a>2. 建模练习题</h2><p><img src="/2019/05/25/swad-hw6/usecase.jpg" alt></p>
+<ul>
+<li>相似的系统提供类似的服务逻辑, 预期的输入与输出不会有太大出入, 因此用例图不可避免地体现出相似性。</li>
+<li>在相同的使用场景中尽量引入地区相关、时代相关的用户故事, 进行不同的内容呈现</li>
+<li>对比新旧用例依赖关系的不同, 可以定位出新需求所使用的创新技术、新的商业模式等。</li>
+</ul>
+<ul>
+<li></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Imp</th>
+<th>Est(man-day)</th>
+<th>How to demo</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>登录系统</td>
+<td>7</td>
+<td>3</td>
+<td>除自建用户系统外, 亦支持微信/支付宝登录</td>
+<td>关联支付宝/微信账号</td>
+</tr>
+<tr>
+<td>2</td>
+<td>搜索酒店</td>
+<td>10</td>
+<td>10</td>
+<td>输入入住/退房时间根据地段搜索酒店</td>
+<td>提供根据价格、星级、距离、历史评价等的排序</td>
+</tr>
+<tr>
+<td>3</td>
+<td>预订酒店</td>
+<td>9</td>
+<td>8</td>
+<td>根据3的搜索结果点击预定进行预定</td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>确认订单</td>
+<td>6</td>
+<td>4</td>
+<td>确认各种预订信息，如房型、日期等</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>支付</td>
+<td>8</td>
+<td>5</td>
+<td>选择多种方式支付订单</td>
+<td>支付异常处理</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>用例</th>
+<th>事务</th>
+<th>计算</th>
+<th>原因</th>
+<th>UC权重</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>登录系统</td>
+<td>2</td>
+<td>2</td>
+<td>两种登录方式</td>
+<td>简单</td>
+</tr>
+<tr>
+<td>搜索酒店</td>
+<td>8</td>
+<td>5</td>
+<td>筛选条件较多</td>
+<td>复杂</td>
+</tr>
+<tr>
+<td>预订酒店</td>
+<td>6</td>
+<td>4</td>
+<td>酒店信息多样</td>
+<td>平均</td>
+</tr>
+<tr>
+<td>确认订单</td>
+<td>3</td>
+<td>2</td>
+<td>功能简单</td>
+<td>简单</td>
+</tr>
+<tr>
+<td>支付</td>
+<td>5</td>
+<td>3</td>
+<td>多种支付方式</td>
+<td>平均</td>
+</tr>
+</tbody>
+</table>
+</div></article></div></main><footer><div class="paginator"><a href="/2019/05/26/swad-hw7/" class="prev">上一篇</a><a href="/2019/04/14/swad-hw3/" class="next">下一篇</a></div><div class="copyright"><p>© 2019 <a href="https://stevewuzhi.github.io">stevewuzhi</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

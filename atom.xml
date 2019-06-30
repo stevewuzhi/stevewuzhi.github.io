@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://stevewuzhi.github.io/"/>
-  <updated>2019-04-18T13:10:01.729Z</updated>
+  <updated>2019-06-30T10:14:21.563Z</updated>
   <id>https://stevewuzhi.github.io/</id>
   
   <author>
@@ -15,6 +15,124 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>简单使用nginx反向代理实现SSL加密</title>
+    <link href="https://stevewuzhi.github.io/2019/06/28/simple-nginx-reverse-proxy/"/>
+    <id>https://stevewuzhi.github.io/2019/06/28/simple-nginx-reverse-proxy/</id>
+    <published>2019-06-28T07:07:19.000Z</published>
+    <updated>2019-06-30T10:14:21.563Z</updated>
+    
+    <content type="html"><![CDATA[<p>By stevewuzhi(15322220)</p><p>nginx是常见的http服务器程序, 可以使用它来进行路由、反代等多种功能。</p><p>此处简单演示如何将请求转发到本地非ssl加密的http服务上, 并在nginx开启默认ssl加密。</p><a id="more"></a><h2 id="1-创建nginx-指定site文件"><a href="#1-创建nginx-指定site文件" class="headerlink" title="1. 创建nginx 指定site文件"></a>1. 创建nginx 指定site文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># touch /etc/nginx/sites-available/swsad-server</span></span><br></pre></td></tr></table></figure><h2 id="2-根据域名反向代理"><a href="#2-根据域名反向代理" class="headerlink" title="2. 根据域名反向代理"></a>2. 根据域名反向代理</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line"><span class="attribute">listen</span>   <span class="number">80</span>;</span><br><span class="line"><span class="comment"># 域名</span></span><br><span class="line"><span class="attribute">server_name</span> <span class="variable">$SERVER_NAME</span>;</span><br><span class="line"></span><br><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line">   <span class="comment"># 转发到环回地址上的http服务端口</span></span><br><span class="line"><span class="attribute">proxy_pass</span> http://127.0.0.1:8081;</span><br><span class="line"><span class="attribute">proxy_redirect</span>     <span class="literal">off</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span>   Host <span class="variable">$host</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span>   X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span>   X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="3-开启SSL"><a href="#3-开启SSL" class="headerlink" title="3. 开启SSL"></a>3. 开启SSL</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>   <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">listen</span>   [::]:<span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span> <span class="variable">$DOMAIN</span>;</span><br><span class="line">    <span class="comment"># 开启SSL</span></span><br><span class="line">    <span class="attribute">ssl</span> <span class="literal">on</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 指定证书与密钥路径</span></span><br><span class="line">    <span class="attribute">ssl_certificate</span>         /path/to/certificate;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span>     /path/to/key;</span><br><span class="line">    <span class="attribute">ssl_protocols</span>           TLSv1.<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:8080;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">proxy_redirect</span>     <span class="literal">off</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span>   Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span>   X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span>   X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="4-默认返回301令请求开启SSL"><a href="#4-默认返回301令请求开启SSL" class="headerlink" title="4. 默认返回301令请求开启SSL"></a>4. 默认返回301令请求开启SSL</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>          <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">listen</span>          [::]:<span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>     <span class="variable">$DOMAIN</span>;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span>      https://<span class="variable">$host</span><span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;By stevewuzhi(15322220)&lt;/p&gt;
+&lt;p&gt;nginx是常见的http服务器程序, 可以使用它来进行路由、反代等多种功能。&lt;/p&gt;
+&lt;p&gt;此处简单演示如何将请求转发到本地非ssl加密的http服务上, 并在nginx开启默认ssl加密。&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>简单Docker化一个node.js工程</title>
+    <link href="https://stevewuzhi.github.io/2019/06/28/simple-node-docker/"/>
+    <id>https://stevewuzhi.github.io/2019/06/28/simple-node-docker/</id>
+    <published>2019-06-28T04:37:08.000Z</published>
+    <updated>2019-06-30T10:14:21.563Z</updated>
+    
+    <content type="html"><![CDATA[<p>By stevewuzhi(15322220)</p><p>Docker的好处不必赘述, 下面看下怎么简单地docker化一个带mongodb数据库的node.js项目。</p><a id="more"></a><h2 id="0-安装Docker"><a href="#0-安装Docker" class="headerlink" title="0. 安装Docker"></a>0. 安装Docker</h2><p>使用的是社区版(community edition), 参考<a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/" target="_blank" rel="noopener">https://docs.docker.com/install/linux/docker-ce/ubuntu/</a> </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install     apt-transport-https     ca-certificates     curl     gnupg-agent     software-properties-common</span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">sudo add-apt-repository    <span class="string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="variable">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable"</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt-get install docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure><h2 id="1-编写Dockerfile"><a href="#1-编写Dockerfile" class="headerlink" title="1. 编写Dockerfile"></a>1. 编写Dockerfile</h2><p>简而言之, 就是将怎么构建Docker内环境的命令输入进去。</p><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat Dockerfile</span></span><br><span class="line"><span class="comment"># 基础镜像, 使用最新node.js环境</span></span><br><span class="line"><span class="keyword">FROM</span> node:latest</span><br><span class="line"><span class="comment"># 工作目录, ENTRYPOINT的命令将以这里为根路径执行</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /home/node/server</span></span><br><span class="line"><span class="comment"># 如何构建内部环境的命令</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">cd</span> /home/node \</span></span><br><span class="line"><span class="bash"> &amp;&amp;   git <span class="built_in">clone</span> --branch gyak https://github.com/2019swsad/server \</span></span><br><span class="line"><span class="bash"> &amp;&amp;   <span class="built_in">cd</span> server \</span></span><br><span class="line"><span class="bash"> &amp;&amp;   npm install \</span></span><br><span class="line"><span class="bash"> &amp;&amp;   <span class="built_in">cd</span> app</span></span><br><span class="line"><span class="comment"># 暴露服务端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8081</span></span><br><span class="line"><span class="comment"># 启动docker后要在工作目录执行的命令</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"node"</span>, <span class="string">"app/app.js"</span>]</span></span><br></pre></td></tr></table></figure><h2 id="2-构建Docker"><a href="#2-构建Docker" class="headerlink" title="2. 构建Docker"></a>2. 构建Docker</h2><p>在Dockerfile所在目录下执行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t gyakkun/2019swsad-server --no-cache .</span><br></pre></td></tr></table></figure><h2 id="3-启动Docker"><a href="#3-启动Docker" class="headerlink" title="3. 启动Docker"></a>3. 启动Docker</h2><p>由于数据库独立出来, 所以在服务端内部需要指定数据库的地址。本次后端使用的是koa以及操作数据库中间件monk, 并使用koa-sslify来启用https服务。为了构建更通用的docker并复用主机的https端口, 我们将使用反向代理的方式提供https服务, 因此需要对源码进行一些修改。详见<a href="https://github.com/2019swsad/server/commit/b579077b710c611109404be6f7db04c329ad1165" target="_blank" rel="noopener">commit</a> 及<a href="https://github.com/2019swsad/server/commit/91181301cbc38568fc10a121a78a3b5e37d40901" target="_blank" rel="noopener">commit</a>。</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// helper/db.js</span></span><br><span class="line"><span class="comment">// const url = 'localhost:27017/data'</span></span><br><span class="line"><span class="keyword">const</span> url = process.env.MONGO_URL || <span class="string">'localhost:27017/data'</span></span><br></pre></td></tr></table></figure><p>然后在docker 运行命令中加入环境变量, 注意引号的用法</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 18081:8081 \</span><br><span class="line">    -e <span class="string">"MONGO_URL=172.17.0.1:27017/data"</span> \</span><br><span class="line">    -e <span class="string">"NODE_APP_INSTANCE=8081"</span> gyakkun/2019swsad-server</span><br></pre></td></tr></table></figure><p>实际上数据库是ssh转发远程数据库得来的, 附上命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -C - 开启压缩</span></span><br><span class="line"><span class="comment"># -f - daemon化, 即使当前会话终端也不会停止转发</span></span><br><span class="line"><span class="comment"># -N - 不打开远程shell</span></span><br><span class="line"><span class="comment"># -L - 本地转发</span></span><br><span class="line"><span class="comment"># 前一半的127.0.0.1:27017 - 在本地的127.0.0.1环回地址打开socket监听27017端口</span></span><br><span class="line"><span class="comment"># 后一半的127.0.0.1:27017 - 将上述socket得到的请求转发到远程主机, 远程主机再将请求转发到自己的127.0.0.1:27017</span></span><br><span class="line">ssh -C -f -N -L 127.0.0.1:27017:127.0.0.1:27017 root@<span class="variable">$DOMAIN</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;By stevewuzhi(15322220)&lt;/p&gt;
+&lt;p&gt;Docker的好处不必赘述, 下面看下怎么简单地docker化一个带mongodb数据库的node.js项目。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="ssh" scheme="https://stevewuzhi.github.io/tags/ssh/"/>
+    
+      <category term="docker" scheme="https://stevewuzhi.github.io/tags/docker/"/>
+    
+      <category term="javascript" scheme="https://stevewuzhi.github.io/tags/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>系统分析与设计 作业7</title>
+    <link href="https://stevewuzhi.github.io/2019/05/26/swad-hw7/"/>
+    <id>https://stevewuzhi.github.io/2019/05/26/swad-hw7/</id>
+    <published>2019-05-26T13:49:37.000Z</published>
+    <updated>2019-06-30T14:51:45.332Z</updated>
+    
+    <content type="html"><![CDATA[<p>By stevewuzhi(15322220)</p><p>1、根据订旅馆建模文档，Asg-RH.pdf：<br>绘制用例图模型（到子用例）<br>给出 make reservation 用例的活动图<br>2、根据课程练习“投递员使用投递箱给收件人快递包裹”的业务场景<br>分别用多泳道图建模三个场景的业务过程<br>根据上述流程，给出快递柜系统最终的用例图模型<br>用正常色彩表示第一个业务流程反映的用例<br>用绿色背景表述第二个业务场景添加或修改的用例，以及支持 Actor<br>用黄色背景表述第三个业务场景添加或修改的用例，以及支持 Actor</p><hr><p>1.</p><p><img src="/2019/05/26/swad-hw7/fig1.png" alt></p><p><img src="/2019/05/26/swad-hw7/fig2.png" alt></p><p>2.</p><p><img src="/2019/05/26/swad-hw7/fig3.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;By stevewuzhi(15322220)&lt;/p&gt;
+&lt;p&gt;1、根据订旅馆建模文档，Asg-RH.pdf：&lt;br&gt;绘制用例图模型（到子用例）&lt;br&gt;给出 make reservation 用例的活动图&lt;br&gt;2、根据课程练习“投递员使用投递箱给收件人快递包裹”的业务场景&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="系分" scheme="https://stevewuzhi.github.io/tags/%E7%B3%BB%E5%88%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>系统分析与设计 作业6</title>
+    <link href="https://stevewuzhi.github.io/2019/05/25/swad-hw6/"/>
+    <id>https://stevewuzhi.github.io/2019/05/25/swad-hw6/</id>
+    <published>2019-05-25T11:17:21.000Z</published>
+    <updated>2019-06-30T14:51:45.332Z</updated>
+    
+    <content type="html"><![CDATA[<p>By stevewuzhi(15322220)</p><p>1、简答题</p><ol><li>用例的概念</li><li>用例和场景的关系？什么是主场景或 happy path？</li><li>用例有哪些形式？</li><li>对于复杂业务，为什么编制完整用例非常难？</li><li>什么是用例图？</li><li>用例图的基本符号与元素？</li><li>用例图的画法与步骤</li><li>用例图给利益相关人与开发者的价值有哪些？</li></ol><p>2、建模练习题(用例模型)</p><ul><li>选择2-3个你熟悉的类似业务的在线服务系统(或移动 APP)，如定旅馆(携程、去哪儿等)、定电影票、背单词APP等，分别绘制它们用例图。并满足以下要求：<ul><li>请使用用户的视角，描述用户目标或系统提供的服务</li><li>粒度达到子用例级别，并用 include 和 exclude 关联它们</li><li>请用色彩标注出你认为创新(区别于竞争对手的)用例或子用例</li><li>尽可能识别外部系统和服务</li></ul></li><li>然后，回答下列问题：<ol><li>为什么相似系统的用例图是相似的？</li><li>如果是定旅馆业务，请对比 Asg_RH 用例图，简述如何利用不同时代、不同地区产品的用例图，展现、突出创新业务和技术</li><li>如何利用用例图定位创新思路(业务创新、或技术创新、或商业模式创新)在系统中的作用 </li><li>请使用 SCRUM 方法，选择一个用例图，编制某定旅馆开发的需求(backlog)开发计划表 </li><li>根据任务4，参考 <a href="https://www.ibm.com/developerworks/cn/rational/edge/09/mar09/collaris_dekker/index.html" target="_blank" rel="noopener">使用用例点估算软件成本</a>，给出项目用例点的估算</li></ol></li></ul><hr><h2 id="1-简答题"><a href="#1-简答题" class="headerlink" title="1.简答题"></a>1.简答题</h2><ol><li><p>用例的概念: 是软件工程或系统工程中对系统如何反应外界请求的描述，是一种通过用户的使用场景来获取需求的技术。每个用例提供了一个或多个场景，该场景说明了系统是如何和最终用户或其它系统互动，也就是谁可以用系统做什么，从而获得一个明确的业务目标。编写用例时要避免使用技术术语，而应该用最终用户或者领域专家的语言。用例一般是由软件开发者和最终用户共同创作的。</p></li><li></li></ol><p>用例和场景的关系: 每一个用例包括了许多个场景，场景中包含了用户是如何与系统进行交互，即谁可以利用系统做什么事情。</p><p>主场景：每一个用例中都包含一个主场景，主场景对应于系统主要的交互，通常是指成功的场景。</p><p>happy path: 在测试用例时没有出现预期之外结果的场景。在用例建模中，happy path是主执行者完成了目标，所有有关人员的需求都得到了满足。</p><ol start="3"><li>用例的形式: 自然语言，可以用形式化语言，也可以用各种图示。</li><li>对于复杂业务，为什么编制完整用例非常难: 复杂业务其业务流程较为复杂，业务较为繁琐，业务流程较多，因此对应于很多复杂的场景，用户交互的细节和相对应的支撑较多，较难实现用户与服务之间的完整与协调。</li><li>用例图: 由参与者、用例，边界以及它们之间的关系构成的用于描述系统功能的视图。用例图是外部用户所能观察到的系统功能的模型图。</li><li>用例图的基本符号与元素: 用例图由参与者(Actor)、用例(Use Case)、系统边界、箭头组成，用画图的方法来完成。</li><li>用例图的画法与步骤: 确定业务过程、系统边界, 根据时序、数据依赖等关系为各命名过程添加箭头, 最后用边界框起来, 加上参与者图标。</li><li>用例图给利益相关人与开发者的价值有:(1)获取需求；(2)指导测试；(3)还可在整个过程中的其它工作流起到指导作用。</li></ol><h2 id="2-建模练习题"><a href="#2-建模练习题" class="headerlink" title="2. 建模练习题"></a>2. 建模练习题</h2><p><img src="/2019/05/25/swad-hw6/usecase.jpg" alt></p><ul><li>相似的系统提供类似的服务逻辑, 预期的输入与输出不会有太大出入, 因此用例图不可避免地体现出相似性。</li><li>在相同的使用场景中尽量引入地区相关、时代相关的用户故事, 进行不同的内容呈现</li><li>对比新旧用例依赖关系的不同, 可以定位出新需求所使用的创新技术、新的商业模式等。</li></ul><ul><li></li></ul><table><thead><tr><th>ID</th><th>Name</th><th>Imp</th><th>Est(man-day)</th><th>How to demo</th><th>Notes</th></tr></thead><tbody><tr><td>1</td><td>登录系统</td><td>7</td><td>3</td><td>除自建用户系统外, 亦支持微信/支付宝登录</td><td>关联支付宝/微信账号</td></tr><tr><td>2</td><td>搜索酒店</td><td>10</td><td>10</td><td>输入入住/退房时间根据地段搜索酒店</td><td>提供根据价格、星级、距离、历史评价等的排序</td></tr><tr><td>3</td><td>预订酒店</td><td>9</td><td>8</td><td>根据3的搜索结果点击预定进行预定</td><td></td></tr><tr><td>4</td><td>确认订单</td><td>6</td><td>4</td><td>确认各种预订信息，如房型、日期等</td><td></td></tr><tr><td>5</td><td>支付</td><td>8</td><td>5</td><td>选择多种方式支付订单</td><td>支付异常处理</td></tr></tbody></table><ul><li></li></ul><table><thead><tr><th>用例</th><th>事务</th><th>计算</th><th>原因</th><th>UC权重</th></tr></thead><tbody><tr><td>登录系统</td><td>2</td><td>2</td><td>两种登录方式</td><td>简单</td></tr><tr><td>搜索酒店</td><td>8</td><td>5</td><td>筛选条件较多</td><td>复杂</td></tr><tr><td>预订酒店</td><td>6</td><td>4</td><td>酒店信息多样</td><td>平均</td></tr><tr><td>确认订单</td><td>3</td><td>2</td><td>功能简单</td><td>简单</td></tr><tr><td>支付</td><td>5</td><td>3</td><td>多种支付方式</td><td>平均</td></tr></tbody></table>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;By stevewuzhi(15322220)&lt;/p&gt;
+&lt;p&gt;1、简答题&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;用例的概念&lt;/li&gt;
+&lt;li&gt;用例和场景的关系？什么是主场景或 happy path？&lt;/li&gt;
+&lt;li&gt;用例有哪些形式？&lt;/li&gt;
+&lt;li&gt;对于复杂业务，为什么编制完整用例
+      
+    
+    </summary>
+    
+    
+      <category term="系分" scheme="https://stevewuzhi.github.io/tags/%E7%B3%BB%E5%88%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>系统分析与设计 作业3</title>
+    <link href="https://stevewuzhi.github.io/2019/04/14/swad-hw3/"/>
+    <id>https://stevewuzhi.github.io/2019/04/14/swad-hw3/</id>
+    <published>2019-04-14T12:16:31.000Z</published>
+    <updated>2019-06-30T14:44:50.828Z</updated>
+    
+    <content type="html"><![CDATA[<p>By stevewuzhi(15322220)</p><a id="more"></a><ol><li><p>简述瀑布模型、增量模型、螺旋模型（含原型方法），并分析优缺点</p><p>从项目特点、风险特征、人力资源利用角度思考</p></li><li><p>简述统一过程三大特点，与面向对象的方法有什么关系？</p></li><li><p>简述统一过程四个阶段的划分准则是什么？每个阶段关键的里程碑是什么？</p></li><li><p>软件企业为什么能按固定节奏生产、固定周期发布软件产品？它给企业项目管理带来哪些好处？</p></li></ol><hr><p>(部分答案参考自 <strong>蔡国扬</strong> 老师的软件测试课件)</p><h2 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h2><h3 id="瀑布模型"><a href="#瀑布模型" class="headerlink" title="瀑布模型"></a>瀑布模型</h3><p>瀑布模型中的每一个开发活动具有下列特征:</p><ul><li>本阶段活动的工作对象来自于上一项活动的输出，这些输出一般是代表本阶段活动结束的里程碑式的文档。</li><li>根据本阶段的活动规程执行相应的任务。</li><li>本阶段活动产出相关的软件工件，作为下一阶段活动的输入。</li><li>对本阶段活动执行情况进行评审。</li></ul><p>优点:</p><ul><li>降低软件开发的复杂程度，提高软件开发过程的透明性，提高软件开发过程的可管理性。</li><li>推迟软件实现，强调在软件实现前必须进行分析和设计工作。</li><li>以项目的阶段评审和文档控制为手段有效地对整个开发过程进行指导，保证了阶段之间的正确衔接，能够及时发现并纠正开</li><li>发过程中存在的缺陷，使产品达到预期的质量要求。</li></ul><p>缺点:</p><ul><li><p>强调过程活动的线性顺序。</p></li><li><p>缺乏灵活性，尤其无法解决软件需求不明确或不准确的问题。</p></li><li><p>风险控制能力较弱。</p></li><li><p>瀑布模型中的软件活动是文档驱动的，当阶段之间规定过多的文档时，会极大地增加系统的工作量。</p></li><li><p>管理人员如果仅仅以文档的完成情况来评估项目完成进度，往往会产生错误的结论。</p></li></ul><h3 id="迭代和增量模型"><a href="#迭代和增量模型" class="headerlink" title="迭代和增量模型"></a>迭代和增量模型</h3><p>增量模型首先对系统最核心或最清晰的需求进行分析、设计、实现、测试并集成到系统中，再按优先级逐步实现后续需求。</p><p><img src="/2019/04/14/swad-hw3/incremental-model.png" alt></p><p>增量模型的优点</p><ul><li><p>增强客户对系统的信心；</p></li><li><p>降低系统失败风险；</p></li><li><p>提高系统可靠性；</p></li><li><p>提高系统的稳定性和可维护性。</p></li></ul><p>增量模型的缺点</p><ul><li><p>建立初始模型时，作为增量基础的基本业务服务的确定有一定难度；</p></li><li><p>增量粒度难以选择。</p></li></ul><h3 id="螺旋模型-含原型方法"><a href="#螺旋模型-含原型方法" class="headerlink" title="螺旋模型(含原型方法)"></a>螺旋模型(含原型方法)</h3><p>螺旋模型主要针对大型软件项目的开发</p><p>螺旋模型的优点: 螺旋模型是风险驱动的迭代过程，强调可选方案和约束条件从而支持软件的重用，有助于将软件质量作为特殊目标融入产品开发之中。螺旋模型结合了瀑布模型和快速原型方法，将瀑布模型的多个阶段转化到多个迭代过程中，以降低项目的风险。</p><p>螺旋模型的缺点:</p><ul><li><p>螺旋模型强调风险分析，但说服外部客户接受和相信分析结果并做出相关反应并不容易，因此螺旋模型往往比较适合内部的大规模软件开发。</p></li><li><p>风险分析需要耗费相当的成本，因此螺旋模型比较适合投资规模较大的软件项目。</p></li><li><p>失误的风险分析可能带来更大的风险。</p></li></ul><h2 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h2><p>RUP 模型(统一模型)的特点<br>RUP (Rational Unified Process) 是一种基于UML 的、以构架为中心、用例驱动与风险驱动相结合的迭代增量过程。它将软件开发过程要素和软件工件要素整合在统一的软件工程框架中，是一个面向对象的程序开发方法论。</p><h2 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h2><p>RUP 中的软件生命周期在时间维度上被分解为四个顺序的阶段：<br>初始阶段(Inception)、精化阶段(Elaboration)、构建阶段(Construction) 和产品交付阶段(Transition)。每个阶段结束于一个主要的里程碑(Major Milestone)，并在阶段结尾执行一次评估以确定这个阶段的目标是否已经满足。如果评估结果令人满意的话，可以允许项目进入下一个阶段。</p><h2 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h2><p>软件企业根据自身特点与用户需求选择不同的软件开发周期模型, 通过不同的迭代策略控制版本发布的时间安排, 实现项目的工业化产出。对企业项目管理来说, 使用合适的生产模型有利于分工的细化, 从而带来生产成本的下降。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;By stevewuzhi(15322220)&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="系分" scheme="https://stevewuzhi.github.io/tags/%E7%B3%BB%E5%88%86/"/>
+    
+  </entry>
   
   <entry>
     <title>系统分析与设计 作业2</title>

@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://stevewuzhi.github.io/2019/05/25/swad-hw6/</loc>
+    
+    <lastmod>2019-06-30T14:51:45.332Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://stevewuzhi.github.io/2019/05/26/swad-hw7/</loc>
+    
+    <lastmod>2019-06-30T14:51:45.332Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://stevewuzhi.github.io/2019/04/14/swad-hw3/</loc>
+    
+    <lastmod>2019-06-30T14:44:50.828Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://stevewuzhi.github.io/2019/06/28/simple-nginx-reverse-proxy/</loc>
+    
+    <lastmod>2019-06-30T10:14:21.563Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://stevewuzhi.github.io/2019/06/28/simple-node-docker/</loc>
+    
+    <lastmod>2019-06-30T10:14:21.563Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://stevewuzhi.github.io/2019/04/02/swad-hw2/</loc>
     
     <lastmod>2019-04-18T13:10:01.729Z</lastmod>
